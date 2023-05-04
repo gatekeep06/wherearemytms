@@ -1,22 +1,24 @@
 {
   "schemaVersion": 1,
-  "id": "cobblemonmdk",
+  "id": "wherearemytms",
   "version": "0.1.0",
-  "name": "Cobblemon MDK",
+  "name": "Where Are My TMs?",
   "description": "Template",
   "authors": [
     "corgi in tights#5131"
   ],
-  "license": "The Unlicense",
-  "icon": "assets/cobblemonmdk/logo.png",
+  "license": "MIT",
+  "icon": "assets/wherearemytms/logo.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dev.reyaan.cobblemonmdk.fabric.CobblemonMDK"
+      "dev.reyaan.wherearemytms.fabric.WhereAreMyTMs"
+    ],
+    "client": [
+      "dev.reyaan.wherearemytms.fabric.WhereAreMyTMsClient"
     ]
   },
 	"mixins": [
-		"cobblemonmdk.mixins.json"
 	],
   "depends": {
     "java": ">=17",

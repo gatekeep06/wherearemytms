@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "wherearemytms:item/tm/blank"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "fire": 1
+      },
+      "model": "wherearemytms:item/tm/fire"
+    }
+  ]
+}

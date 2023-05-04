@@ -1,4 +1,4 @@
-rootProject.name = "CobblemonMDK"
+rootProject.name = "WhereAreMyTMs"
 
 pluginManagement {
     repositories {

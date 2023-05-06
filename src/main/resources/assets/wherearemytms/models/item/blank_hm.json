@@ -1,6 +1,116 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "wherearemytms:item/hm/blank"
-  }
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "wherearemytms:item/hm/blank"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "wherearemytms:normal": 1
+            },
+            "model": "wherearemytms:item/hm/normal"
+        },
+        {
+            "predicate": {
+                "wherearemytms:fire": 1
+            },
+            "model": "wherearemytms:item/hm/fire"
+        },
+        {
+            "predicate": {
+                "wherearemytms:water": 1
+            },
+            "model": "wherearemytms:item/hm/water"
+        },
+        {
+            "predicate": {
+                "wherearemytms:grass": 1
+            },
+            "model": "wherearemytms:item/hm/grass"
+        },
+        {
+            "predicate": {
+                "wherearemytms:electric": 1
+            },
+            "model": "wherearemytms:item/hm/electric"
+        },
+        {
+            "predicate": {
+                "wherearemytms:ice": 1
+            },
+            "model": "wherearemytms:item/hm/ice"
+        },
+        {
+            "predicate": {
+                "wherearemytms:fighting": 1
+            },
+            "model": "wherearemytms:item/hm/fighting"
+        },
+        {
+            "predicate": {
+                "wherearemytms:poison": 1
+            },
+            "model": "wherearemytms:item/hm/poison"
+        },
+        {
+            "predicate": {
+                "wherearemytms:ground": 1
+            },
+            "model": "wherearemytms:item/hm/ground"
+        },
+        {
+            "predicate": {
+                "wherearemytms:flying": 1
+            },
+            "model": "wherearemytms:item/hm/flying"
+        },
+        {
+            "predicate": {
+                "wherearemytms:psychic": 1
+            },
+            "model": "wherearemytms:item/hm/psychic"
+        },
+        {
+            "predicate": {
+                "wherearemytms:bug": 1
+            },
+            "model": "wherearemytms:item/hm/bug"
+        },
+        {
+            "predicate": {
+                "wherearemytms:rock": 1
+            },
+            "model": "wherearemytms:item/hm/rock"
+        },
+        {
+            "predicate": {
+                "wherearemytms:ghost": 1
+            },
+            "model": "wherearemytms:item/hm/ghost"
+        },
+        {
+            "predicate": {
+                "wherearemytms:dragon": 1
+            },
+            "model": "wherearemytms:item/hm/dragon"
+        },
+        {
+            "predicate": {
+                "wherearemytms:dark": 1
+            },
+            "model": "wherearemytms:item/hm/dark"
+        },
+        {
+            "predicate": {
+                "wherearemytms:steel": 1
+            },
+            "model": "wherearemytms:item/hm/steel"
+        },
+        {
+            "predicate": {
+                "wherearemytms:fairy": 1
+            },
+            "model": "wherearemytms:item/hm/fairy"
+        }
+    ]
 }

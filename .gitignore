@@ -28,3 +28,6 @@ build/
 run/
 .idea/
 .gradle/
+
+python_out/
+python_in/

@@ -2,7 +2,6 @@ package dev.reyaan.wherearemytms.fabric.item;
 
 import com.cobblemon.mod.common.api.moves.*;
 import com.cobblemon.mod.common.api.pokemon.moves.Learnset;
-import com.cobblemon.mod.common.api.pokemon.moves.LearnsetQuery;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import net.minecraft.client.item.TooltipContext;
@@ -23,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static dev.reyaan.wherearemytms.fabric.WhereAreMyTMs.config;
+import static dev.reyaan.wherearemytms.fabric.WhereAreMyTMs.*;
 
 public class BasePokemonTM extends Item {
     public String title;
@@ -93,21 +92,17 @@ public class BasePokemonTM extends Item {
 
         // Move is not part of learnset
         Learnset learnset = pokemon.getForm().getMoves();
-        System.out.println(learnset.getEggMoves().contains(moveTemplate));
-
-        if (config != null) {
-            if (config.getOrDefault("allow_egg_moves", "false") != "false")  {
+//            if (allow_egg_moves)  {
+//                if (learnset.getEggMoves().contains(moveTemplate)) {
+//                    addMove(user, pokemon, moveTemplate, moves, benchedMoves);
+//                    return true;
+//                }
+//            }
+            if (allow_tutor_moves) {
                 if (learnset.getEggMoves().contains(moveTemplate)) {
                     addMove(user, pokemon, moveTemplate, moves, benchedMoves);
                     return true;
                 }
-            }
-            if (config.getOrDefault("allow_tutor_moves", "false") != "false") {
-                if (learnset.getEggMoves().contains(moveTemplate)) {
-                    addMove(user, pokemon, moveTemplate, moves, benchedMoves);
-                    return true;
-                }
-            }
         }
 
         if (learnset.getTmMoves().contains(moveTemplate)) {

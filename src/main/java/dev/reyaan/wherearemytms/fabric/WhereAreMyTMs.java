@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
@@ -69,14 +70,22 @@ public class WhereAreMyTMs implements ModInitializer {
 
     public static Identifier TM_MACHINE_CLOSE_PACKET_ID = id("packet.wherearemytms.close");
 
-    public static Map<String, String> config;
+    public static boolean allow_egg_moves = false;
+    public static boolean allow_tutor_moves = false;
 
     @Override
     public void onInitialize() {
         LOGGER.info("Hello, TMs!");
-        createConfig();
-        config = readConfig();
 
+        File configFile = FabricLoader.getInstance().getConfigDir().resolve(MOD_NAME + "Config.json").toFile();
+
+        if (configFile.exists()) {
+            WhereAreMyTMsConfig config = WhereAreMyTMsConfig.fromFile(configFile);
+//            allow_egg_moves = config.allow_egg_moves;
+            allow_tutor_moves = config.allow_tutor_moves;
+        } else {
+            new WhereAreMyTMsConfig().toFile(configFile);
+        }
 
         registerBlankDiscs();
         registerTMMachine();
@@ -127,54 +136,6 @@ public class WhereAreMyTMs implements ModInitializer {
 
             player.closeHandledScreen();
         });
-    }
-
-    public boolean createConfig() {
-        File configFolder = new File(System.getProperty("user.dir") + "/config/" + MOD_ID);
-        if (!configFolder.exists()) {
-            boolean bl = configFolder.mkdir();
-            LOGGER.info("Config directory not found, created successfully: " + bl);
-            if (!bl) return false;
-        }
-
-        File configFile = new File(configFolder, MOD_NAME + "Config.json");
-        if (!configFile.exists()) {
-            try {
-                boolean bl = configFile.createNewFile();
-                LOGGER.info("Config file not found, created successfully: " + bl);
-                if (!bl) return false;
-
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Writer writer = Files.newBufferedWriter(configFile.toPath());
-                gson.toJson(createConfigMap(), writer);
-                writer.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return true;
-    }
-
-    public HashMap<String, String> createConfigMap() {
-        HashMap<String, String> map = new HashMap<>() {};
-        map.put("allow_egg_moves", "false");
-        map.put("allow_tutor_moves", "false");
-        return map;
-    }
-
-    public HashMap<String, String> readConfig() {
-        File configFolder = new File(System.getProperty("user.dir") + "/config/" + MOD_ID);
-        File configFile = new File(configFolder, MOD_NAME + "Config.json");
-        Gson gson = new Gson();
-        try {
-            String json = new String(Files.readAllBytes(configFile.toPath()));
-            System.out.println("JSON READ: " + json);
-            return gson.fromJson(json, HashMap.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }

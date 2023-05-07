@@ -1,6 +1,7 @@
 package dev.reyaan.wherearemytms.fabric.item;
 
 import com.cobblemon.mod.common.api.moves.*;
+import com.cobblemon.mod.common.api.pokemon.moves.Learnset;
 import com.cobblemon.mod.common.api.pokemon.moves.LearnsetQuery;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.Pokemon;
@@ -21,6 +22,8 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+
+import static dev.reyaan.wherearemytms.fabric.WhereAreMyTMs.config;
 
 public class BasePokemonTM extends Item {
     public String title;
@@ -89,32 +92,40 @@ public class BasePokemonTM extends Item {
         }
 
         // Move is not part of learnset
-        if (!LearnsetQuery.Companion.getTM_MOVE().canLearn(moveTemplate, pokemon.getForm().getMoves()) &&
-                !LearnsetQuery.Companion.getEGG_MOVE().canLearn(moveTemplate, pokemon.getForm().getMoves())) {
-            user.sendMessage(create_response(
-                    "response.wherearemytms.cannot_learn",
-                    pokemon.getDisplayName(),
-                    moveTemplate.getDisplayName(),
-                    Formatting.RED)
-            );
-            return false;
+        Learnset learnset = pokemon.getForm().getMoves();
+        System.out.println(learnset.getEggMoves().contains(moveTemplate));
+
+        if (config != null) {
+            if (config.getOrDefault("allow_egg_moves", "false") != "false")  {
+                if (learnset.getEggMoves().contains(moveTemplate)) {
+                    addMove(user, pokemon, moveTemplate, moves, benchedMoves);
+                    return true;
+                }
+            }
+            if (config.getOrDefault("allow_tutor_moves", "false") != "false") {
+                if (learnset.getEggMoves().contains(moveTemplate)) {
+                    addMove(user, pokemon, moveTemplate, moves, benchedMoves);
+                    return true;
+                }
+            }
         }
 
-        // Add to moves or benched moves
-        if (moves.hasSpace()) {
-            moves.add(moveTemplate.create());
-        } else {
-            benchedMoves.add(new BenchedMove(moveTemplate, 0));
+        if (learnset.getTmMoves().contains(moveTemplate)) {
+            addMove(user, pokemon, moveTemplate, moves, benchedMoves);
+            return true;
         }
+
 
         user.sendMessage(create_response(
-                "response.wherearemytms.success",
+                "response.wherearemytms.cannot_learn",
                 pokemon.getDisplayName(),
                 moveTemplate.getDisplayName(),
-                Formatting.GOLD)
+                Formatting.RED)
         );
-        return true;
+        return false;
     }
+
+
 
     private static Text create_response(String key, MutableText pokemon, MutableText move, Formatting color) {
         return Text.translatable(key, pokemon.getString(), move.getString())
@@ -150,8 +161,23 @@ public class BasePokemonTM extends Item {
             );
         } else {
             tooltip.add(Text.translatable(this.usesKey).formatted(Formatting.GOLD));
-            tooltip.add(Text.translatable("description.wherearemytms.requires_TE_drive").formatted(Formatting.GRAY));
+            tooltip.add(Text.translatable("description.wherearemytms.requires_printing").formatted(Formatting.GRAY));
         }
+    }
+
+    private void addMove(PlayerEntity user, Pokemon pokemon, MoveTemplate moveTemplate, MoveSet moves, BenchedMoves benchedMoves) {
+        if (moves.hasSpace()) {
+            moves.add(moveTemplate.create());
+        } else {
+            benchedMoves.add(new BenchedMove(moveTemplate, 0));
+        }
+
+        user.sendMessage(create_response(
+                "response.wherearemytms.success",
+                pokemon.getDisplayName(),
+                moveTemplate.getDisplayName(),
+                Formatting.GOLD)
+        );
     }
 
     public static boolean isTMBlank(ItemStack stack) {

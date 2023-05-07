@@ -1,47 +1,29 @@
 package dev.reyaan.wherearemytms.fabric.block;
 
-import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.moves.MoveTemplate;
 import com.cobblemon.mod.common.client.gui.MoveCategoryIcon;
 import com.cobblemon.mod.common.client.gui.TypeIcon;
-import com.cobblemon.mod.common.pokemon.Gender;
-import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.cobblemon.mod.common.pokemon.Species;
-import com.cobblemon.mod.common.pokemon.activestate.PokemonState;
-import com.mojang.blaze3d.systems.RenderSystem;
-import dev.reyaan.wherearemytms.fabric.WhereAreMyTMsClient;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.widget.TexturedButtonWidget;
-import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.awt.*;
-import java.util.Set;
 
 import static com.cobblemon.mod.common.api.gui.GuiUtilsKt.blitk;
-import static com.cobblemon.mod.common.api.gui.GuiUtilsKt.drawPortraitPokemon;
 import static com.cobblemon.mod.common.client.render.RenderHelperKt.drawScaledText;
-import static com.cobblemon.mod.common.util.LocalizationUtilsKt.lang;
 import static dev.reyaan.wherearemytms.fabric.WhereAreMyTMs.id;
 import static dev.reyaan.wherearemytms.fabric.block.RenderUtils.s_blitk;
-import static dev.reyaan.wherearemytms.fabric.block.TEDriveScreen.DEFAULT_LARGE;
+import static dev.reyaan.wherearemytms.fabric.block.TMMachineScreen.DEFAULT_LARGE;
 
 @Environment(EnvType.CLIENT)
 public class MoveOptionWidget {
     public static final Identifier moveTexture = id("textures/gui/battle_move.png");
     public static final Identifier moveOverlayTexture = id("textures/gui/battle_move_overlay.png");
 
-    private static final int TILE_WIDTH = 92;
-    private static final int TILE_HEIGHT = 24;
+    public static final int TILE_WIDTH = 92;
+    public static final int TILE_HEIGHT = 24;
 
     MoveTemplate moveTemplate;
     float x;
@@ -58,19 +40,26 @@ public class MoveOptionWidget {
         var disabled = moveTemplate.getPp() <= 0;
         var opacity = disabled ? 0.5F : 1F;
         var rgb = new Color(moveTemplate.getElementalType().getHue());
-        System.out.println("COLOR:" + rgb + "  HOVERED:" + this.hovered);
 
         // Base
-        s_blitk(
+        blitk(
                 matrices,
                 moveTexture,
-                this.x,
-                this.y,
-                TILE_WIDTH,
+                x,
+                y,
                 TILE_HEIGHT,
+                TILE_WIDTH,
+                0,
                 hovered ? TILE_HEIGHT : 0,
-                rgb,
-                opacity
+                TILE_WIDTH,
+                TILE_HEIGHT*2,
+                0,
+                rgb.getRed()/255F,
+                rgb.getGreen()/255F,
+                rgb.getBlue()/255F,
+                opacity,
+                true,
+                1F
         );
 
         // Overlay

@@ -26,6 +26,7 @@ public class WhereAreMyTMsClient implements ClientModInitializer {
     }
 
     private static void createTypes(HashMap<String, String> types) {
+        // hyper cursed oml
         types.put("normal", "Normal");
         types.put("fire", "Fire");
         types.put("water", "Water");
@@ -44,6 +45,7 @@ public class WhereAreMyTMsClient implements ClientModInitializer {
         types.put("dark", "Dark");
         types.put("steel", "Steel");
         types.put("fairy", "Fairy");
+        // latest-semver corgi says what the fuck were you thinking 13.0.5-semver corgi?
 
         for (Item item : machines) {
             for (Map.Entry<String, String> entry : types.entrySet()) {

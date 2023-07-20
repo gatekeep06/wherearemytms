@@ -7,15 +7,18 @@
   "authors": [
     "corgi in tights#5131"
   ],
-  "license": "MIT",
+  "license": "Unlicense",
   "icon": "assets/wherearemytms/logo.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dev.reyaan.wherearemytms.fabric.WhereAreMyTMs"
+      {
+        "adapter": "kotlin",
+        "value": "dev.reyaan.wherearemytms.fabric.WAMT"
+      }
     ],
     "client": [
-      "dev.reyaan.wherearemytms.fabric.WhereAreMyTMsClient"
+      "dev.reyaan.wherearemytms.fabric.client.WAMTClient"
     ]
   },
 	"mixins": [
@@ -25,7 +28,7 @@
     "minecraft": ">=1.19.2",
     "fabricloader": ">=0.14.9",
     "fabric": "*",
-    "architectury": ">=6.5.69",
-    "cobblemon": ">=1.3.1"
+    "cobblemon": ">=1.3.1",
+    "fabric-language-kotlin": ">=1.8.3+kotlin.1.7.10"
   }
 }

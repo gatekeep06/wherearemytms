@@ -1,9 +1,7 @@
 plugins {
     id("java")
-    id("dev.architectury.loom") version("1.1-SNAPSHOT")
+    id("dev.architectury.loom") version("0.12.0-SNAPSHOT")
     id("architectury-plugin") version("3.4-SNAPSHOT")
-    id("fabric-loom")
-    `maven-publish`
     kotlin("jvm") version ("1.7.10")
 }
 
@@ -17,14 +15,8 @@ architectury {
 
 repositories {
     mavenCentral()
-    maven(url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
+    maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
     maven("https://maven.impactdev.net/repository/development/")
-    maven {
-        url = uri("https://cursemaven.com")
-        content {
-            includeGroup("curse.maven")
-        }
-    }
 }
 
 dependencies {
@@ -35,18 +27,18 @@ dependencies {
     // Fabric API
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")
 
+    // Fabric Kotlin
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.3+kotlin.1.7.10")
+
     // Architectury
     modImplementation("dev.architectury", "architectury-fabric", "6.5.69")
 
     // Cobblemon
-    modImplementation("curse.maven:cobblemon-687131:${property("cobblemon_curse_file_id")}")
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+//    modImplementation("curse.maven:cobblemon-687131:${property("cobblemon_curse_file_id")}")
+    modImplementation("com.cobblemon:fabric:${property("cobblemon_version")}")
 }
 
 tasks {
-
     processResources {
         inputs.property("version", project.version)
 
@@ -59,29 +51,9 @@ tasks {
         from("LICENSE")
     }
 
-    publishing {
-        publications {
-            create<MavenPublication>("mavenJava") {
-                artifact(remapJar) {
-                    builtBy(remapJar)
-                }
-                artifact(kotlinSourcesJar) {
-                    builtBy(remapSourcesJar)
-                }
-            }
-        }
-
-        // select the repositories you want to publish to
-        repositories {
-            // uncomment to publish to the local maven
-            // mavenLocal()
-        }
-    }
-
     compileKotlin {
         kotlinOptions.jvmTarget = "17"
     }
-
 }
 
 java {

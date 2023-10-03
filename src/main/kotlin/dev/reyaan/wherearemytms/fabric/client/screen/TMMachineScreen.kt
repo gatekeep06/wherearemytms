@@ -42,7 +42,6 @@ class TMMachineScreen(private val party: List<Pokemon?>):
     }
 
     private var modelWidget: ModelWidget? = null
-    private val buttons = ArrayList<ButtonWidget>()
 
     private var backButton: SlotChangeWidget? = null
     private var nextButton: SlotChangeWidget? = null
@@ -59,7 +58,6 @@ class TMMachineScreen(private val party: List<Pokemon?>):
     private lateinit var nonNullParty: List<Pokemon>
 
     private fun refresh(x: Int, y: Int) {
-        System.out.println("REFRESH $currentSlot")
         val pokemon = nonNullParty[currentSlot]
         modelWidget?.pokemon = pokemon.asRenderablePokemon()
         addMoves(pokemon, x, y)
@@ -84,7 +82,6 @@ class TMMachineScreen(private val party: List<Pokemon?>):
     }
 
     fun useMoveOption(move: Move) {
-        System.out.println("OOS $move")
         val buf = PacketByteBufs.create()
         val nbtCompound = NbtCompound()
         move.saveToNBT(nbtCompound)
@@ -102,8 +99,7 @@ class TMMachineScreen(private val party: List<Pokemon?>):
         nonNullParty = getNonNullPartyMembers(party)
 
         if (nonNullParty.isEmpty()) {
-            MinecraftClient.getInstance().player?.sendChatMessage(
-                "You should probably get a Pokemon first..",
+            MinecraftClient.getInstance().player?.sendMessage(
                 Text.of("You should probably get a Pokemon first..")
             )
             super.close()
@@ -113,22 +109,20 @@ class TMMachineScreen(private val party: List<Pokemon?>):
             val y = (height - BASE_HEIGHT) / 2
 
             backButton = SlotChangeWidget(
-                    pX = x + 1,
-                    pY = y + 109,
+                    pX = x + 10,
+                    pY = y + 105,
                     resource = "battle_back"
                 ) {
-                    System.out.println("BACKA")
                     currentSlot = maxOf(currentSlot - 1, 0)
                     refresh(x, y)
                 }
 
 
             nextButton = SlotChangeWidget(
-                    pX = x + 1,
-                    pY = y + 140,
+                    pX = x + 12,
+                    pY = y - 33,
                     resource = "battle_forward"
                 ) {
-                    System.out.println("NEXt")
                     currentSlot = minOf(currentSlot + 1, nonNullParty.size - 1)
                     refresh(x, y)
                 }
@@ -187,7 +181,7 @@ class TMMachineScreen(private val party: List<Pokemon?>):
             matrixStack = matrices,
             font = DEFAULT_LARGE,
             text = pokemon.displayName.bold(),
-            x = x + 10,
+            x = x + 5,
             y = y + 9,
             shadow = true
         )
@@ -201,7 +195,7 @@ class TMMachineScreen(private val party: List<Pokemon?>):
                 font = DEFAULT_LARGE,
                 text = textSymbol,
                 x = x + 5,
-                y = y + 8.5,
+                y = y + 15,
                 colour = if (isMale) 0x32CBFF else 0xFC5454,
                 shadow = true,
                 scale=1.25F

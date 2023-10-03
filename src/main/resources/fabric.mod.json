@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "id": "wherearemytms",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "name": "Where Are My TMs?",
   "description": "Adds in TMs for Cobblemon",
   "authors": [
-    "corgi in tights#5131"
+    "hiscorginess"
   ],
-  "license": "Unlicense",
+  "license": "MPL 2.0",
   "icon": "assets/wherearemytms/logo.png",
   "environment": "*",
   "entrypoints": {

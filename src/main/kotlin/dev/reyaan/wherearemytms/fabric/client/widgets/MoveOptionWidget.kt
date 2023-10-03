@@ -3,8 +3,6 @@ package dev.reyaan.wherearemytms.fabric.client.widgets
 import com.cobblemon.mod.common.CobblemonSounds
 import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.api.moves.Move
-import com.cobblemon.mod.common.api.moves.MoveTemplate
-import com.cobblemon.mod.common.api.moves.Moves
 import com.cobblemon.mod.common.api.text.bold
 import com.cobblemon.mod.common.api.text.gold
 import com.cobblemon.mod.common.api.text.red
@@ -36,35 +34,27 @@ class MoveOptionWidget(
     companion object {
         private const val WIDTH = 92
         private const val HEIGHT = 24
-        private const val SCALE = 1.0F
     }
 
     val typeIcon = TypeIcon(
-        x = x - 6,
-        y = y + 4,
+        x = x - 2,
+        y = y + 3,
         type = move.template.elementalType
     )
 
     val categoryIcon = MoveCategoryIcon(
-        x = x + 48,
+        x = x + 76,
         y = y + 13.5,
         category = move.template.damageCategory
     )
 
-    private fun getOffset(mouseX: Int, mouseY: Int): Int {
-        if (disabled) {
-            return 48
-        } else {
-            if (isHovered(mouseX.toDouble(), mouseY.toDouble())) {
-                return HEIGHT
-            }
-            return 0
-        }
+    private fun getOffset(): Int {
+        return if (hovered) HEIGHT
+        else if (disabled) HEIGHT*2
+        else 0
     }
 
     override fun renderButton(matrices: MatrixStack, mouseX: Int, mouseY: Int, pPartialTicks: Float) {
-//        System.out.println("HOVERED $disabled ${getOffset(mouseX, mouseY)}")
-
         val rgb = move.template.elementalType.hue.toRGB()
 
         blitk(
@@ -74,9 +64,8 @@ class MoveOptionWidget(
             y = y,
             width = WIDTH,
             height = HEIGHT,
-            vOffset = getOffset(mouseX, mouseY),
+            vOffset = getOffset(),
             textureHeight = HEIGHT * 3,
-            scale = SCALE,
             red = rgb.first,
             green = rgb.second,
             blue = rgb.third,
@@ -101,7 +90,7 @@ class MoveOptionWidget(
             matrixStack = matrices,
             font = TMMachineScreen.DEFAULT_LARGE,
             text = movePPText,
-            x = x + 53,
+            x = x + 60,
             y = y + 13,
             centered = true
         )
@@ -113,7 +102,7 @@ class MoveOptionWidget(
             matrixStack = matrices,
             font = TMMachineScreen.DEFAULT_LARGE,
             text = move.template.displayName.bold(),
-            x = x + 26,
+            x = x + 22,
             y = y + 2,
             shadow = true
         )
@@ -127,8 +116,7 @@ class MoveOptionWidget(
         return !disabled
     }
 
-    fun isHovered(pMouseX: Double, pMouseY: Double): Boolean {
-        if (disabled) return false
-        return pMouseX >= x && pMouseY >= y && pMouseX < x + WIDTH && pMouseY < y + HEIGHT
+    fun isHovered(mouseX: Double, mouseY: Double): Boolean {
+        return mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height
     }
 }

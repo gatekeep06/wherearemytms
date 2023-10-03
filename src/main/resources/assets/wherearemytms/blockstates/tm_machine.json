@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=east": {
-      "model": "wherearemytms:block/tm_machine",
+    "facing=south,half=upper": {
+      "model": "wherearemytms:block/tm_machine_top"
+    },
+    "facing=west,half=upper": {
+      "model": "wherearemytms:block/tm_machine_top",
       "y": 90
     },
-    "facing=north": {
-      "model": "wherearemytms:block/tm_machine"
-    },
-    "facing=south": {
-      "model": "wherearemytms:block/tm_machine",
+    "facing=north,half=upper": {
+      "model": "wherearemytms:block/tm_machine_top",
       "y": 180
     },
-    "facing=west": {
-      "model": "wherearemytms:block/tm_machine",
+    "facing=east,half=upper": {
+      "model": "wherearemytms:block/tm_machine_top",
+      "y": 270
+    },
+    "facing=south,half=lower": {
+      "model": "wherearemytms:block/tm_machine_bottom"
+    },
+    "facing=west,half=lower": {
+      "model": "wherearemytms:block/tm_machine_bottom",
+      "y": 90
+    },
+    "facing=north,half=lower": {
+      "model": "wherearemytms:block/tm_machine_bottom",
+      "y": 180
+    },
+    "facing=east,half=lower": {
+      "model": "wherearemytms:block/tm_machine_bottom",
       "y": 270
     }
   }

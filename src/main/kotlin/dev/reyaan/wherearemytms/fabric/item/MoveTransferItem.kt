@@ -16,15 +16,13 @@ import net.minecraft.stat.Stats
 import net.minecraft.text.MutableText
 import net.minecraft.text.Style
 import net.minecraft.text.Text
+import net.minecraft.text.TextColor
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.world.World
 
-abstract class MoveTransferItem(settings: Settings): Item(Settings()) {
-    abstract val breaksAfterUse: Boolean
-    abstract val titleKey: String
-
+class MoveTransferItem(settings: Settings, val breaksAfterUse: Boolean, val titleKey: String): Item(settings) {
     protected fun teach(user: PlayerEntity, pokemon: Pokemon, moveTemplate: MoveTemplate): Boolean {
         val moves = pokemon.moveSet
         val benchedMoves = pokemon.benchedMoves
@@ -44,16 +42,25 @@ abstract class MoveTransferItem(settings: Settings): Item(Settings()) {
 
         // Move is not part of learnset
         val learnset = pokemon.form.moves
-        if (WAMT.config.allowTutorMoves) {
+        if (WAMT.config.allowEggMoves) {
             if (learnset.eggMoves.contains(moveTemplate)) {
                 addMove(user, pokemon, moveTemplate, moves, benchedMoves)
                 return true
             }
         }
+
+        if (WAMT.config.allowTutorMoves) {
+            if (learnset.tutorMoves.contains(moveTemplate)) {
+                addMove(user, pokemon, moveTemplate, moves, benchedMoves)
+                return true
+            }
+        }
+
         if (learnset.tmMoves.contains(moveTemplate)) {
             addMove(user, pokemon, moveTemplate, moves, benchedMoves)
             return true
         }
+
         user.sendMessage(
             createResponse(
                 "response.wherearemytms.cannot_learn",
@@ -66,7 +73,7 @@ abstract class MoveTransferItem(settings: Settings): Item(Settings()) {
     }
 
     protected fun moveInMoveSets(moveTemplate: MoveTemplate, moves: MoveSet, benchedMoves: BenchedMoves): Boolean {
-        return moves.any { it.template == moveTemplate } && benchedMoves.any { it.moveTemplate == moveTemplate }
+        return moves.any { it.template == moveTemplate } || benchedMoves.any { it.moveTemplate == moveTemplate }
     }
 
     override fun useOnEntity(stack: ItemStack, user: PlayerEntity?, entity: LivingEntity, hand: Hand): ActionResult {
@@ -78,10 +85,11 @@ abstract class MoveTransferItem(settings: Settings): Item(Settings()) {
 
                 // Interacted entity is Pokemon and user is owner
                 if (entity is PokemonEntity && entity.isOwner(user)) {
+
                     // TM has move & type data attached
                     val nbtCompound = stack.getOrCreateNbt()
-                    if (isBlank(nbtCompound)) {
-                        val moveTemplate = getByName(nbtCompound.getString("move"))
+                    if (nbtCompound.contains("move")) {
+                        val moveTemplate = Moves.getByName(nbtCompound.getString("move"))
 
                         if (moveTemplate != null) {
                             // Pokemon can learn move
@@ -111,11 +119,18 @@ abstract class MoveTransferItem(settings: Settings): Item(Settings()) {
 
     override fun appendTooltip(stack: ItemStack, world: World?, tooltip: MutableList<Text?>, context: TooltipContext?) {
         val nbtCompound = stack.getOrCreateNbt()
-        if (nbtCompound.contains("type") && nbtCompound.contains("hue")) {
-            tooltip.add(
-                Text.literal(nbtCompound.getString("type"))
-                    .setStyle(Style.EMPTY.withColor(nbtCompound.getInt("hue")))
-            )
+        if (nbtCompound.contains("move")) {
+            val move = nbtCompound.getString("move")
+            val template = getByName(move)
+            if (template != null) {
+                tooltip.add(
+                    template.elementalType.displayName.setStyle(Style.EMPTY.withColor(Formatting.GRAY))
+                )
+            } else {
+                tooltip.add(
+                    Text.of("Move ($move) was not found?")
+                )
+            }
         } else {
             if (breaksAfterUse) {
                 tooltip.add(Text.translatable("description.wherearemytms.breaks_after_use").formatted(Formatting.GOLD))
@@ -149,15 +164,5 @@ abstract class MoveTransferItem(settings: Settings): Item(Settings()) {
                 Formatting.GOLD
             )
         )
-    }
-
-    companion object {
-        fun isBlank(stack: ItemStack): Boolean {
-            return !stack.orCreateNbt.contains("move")
-        }
-
-        fun isBlank(nbtCompound: NbtCompound): Boolean {
-            return !nbtCompound.contains("move")
-        }
     }
 }

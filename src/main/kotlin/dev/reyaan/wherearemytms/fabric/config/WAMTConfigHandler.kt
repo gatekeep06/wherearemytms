@@ -11,12 +11,11 @@ class WAMTConfigHandler(
     private val gson = GsonBuilder().setPrettyPrinting().create()
 
     fun init(): WAMTConfigObject {
-        return if (!file.exists()) {
+        if (!file.exists()) {
             deserialize()
-            WAMTConfigObject()
-        } else {
-            serialize()
+            return WAMTConfigObject()
         }
+        return serialize()
     }
 
     fun serialize(): WAMTConfigObject {

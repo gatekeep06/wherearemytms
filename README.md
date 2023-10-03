@@ -1,2 +1,12 @@
-i literally just added the pictures for modrinth here im way too lazy lol
-this is just meant to serve as an open-source for others, not rly for me so i cant care much
+# Where Are My TMs?
+
+i found them
+
+
+## Credits
+
+Assets:
+- falkory (her textures are unmerged as of now, will be next update when I have the time)
+- pois1x (the gumball TM textures)
+
+big thanks to the two of them, to anyone else reading this: please stop sending me assets i have enough now please

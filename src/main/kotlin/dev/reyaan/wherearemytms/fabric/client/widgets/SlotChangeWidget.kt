@@ -25,7 +25,6 @@ class SlotChangeWidget(
     companion object {
         private const val WIDTH = 58
         private const val HEIGHT = 34
-//        private const val SCALE = 0.5F
     }
 
     override fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, pPartialTicks: Float) {
@@ -36,9 +35,10 @@ class SlotChangeWidget(
             y = y,
             width = WIDTH,
             height = HEIGHT,
+            uOffset = 0,
             vOffset = if (isHovered(mouseX.toDouble(), mouseY.toDouble())) HEIGHT else 0,
+            textureWidth = WIDTH,
             textureHeight = HEIGHT * 2,
-//            scale = SCALE
         )
     }
 

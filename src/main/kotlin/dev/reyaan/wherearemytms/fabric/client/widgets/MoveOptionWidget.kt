@@ -12,11 +12,13 @@ import com.cobblemon.mod.common.client.render.drawScaledText
 import com.cobblemon.mod.common.util.math.toRGB
 import dev.reyaan.wherearemytms.fabric.WAMT
 import dev.reyaan.wherearemytms.fabric.client.screen.TMMachineScreen
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.sound.SoundManager
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
 
 
@@ -27,7 +29,7 @@ class MoveOptionWidget(
     var disabled: Boolean = false,
     resource: String = "battle_move",
     onPress: PressAction,
-): ButtonWidget(pX, pY, WIDTH, HEIGHT, Text.literal(move.name), onPress) {
+): ButtonWidget(pX, pY, WIDTH, HEIGHT, Text.literal(move.name), onPress, DEFAULT_NARRATION_SUPPLIER) {
 
     private val buttonResource = WAMT.id("textures/gui/$resource.png")
     private val overlayResource = WAMT.id("textures/gui/battle_move_overlay.png")
@@ -54,8 +56,9 @@ class MoveOptionWidget(
         else 0
     }
 
-    override fun renderButton(matrices: MatrixStack, mouseX: Int, mouseY: Int, pPartialTicks: Float) {
+    override fun renderButton(drawContext: DrawContext, mouseX: Int, mouseY: Int, pPartialTicks: Float) {
         val rgb = move.template.elementalType.hue.toRGB()
+        val matrices = drawContext.matrices
 
         blitk(
             matrixStack = matrices,
@@ -72,7 +75,7 @@ class MoveOptionWidget(
         )
 
         blitk(
-            matrixStack = matrices,
+            matrixStack = drawContext.matrices,
             texture = overlayResource,
             x = x,
             y = y,
@@ -87,7 +90,7 @@ class MoveOptionWidget(
         }
 
         drawScaledText(
-            matrixStack = matrices,
+            drawContext,
             font = TMMachineScreen.DEFAULT_LARGE,
             text = movePPText,
             x = x + 60,
@@ -95,11 +98,11 @@ class MoveOptionWidget(
             centered = true
         )
 
-        typeIcon.render(matrices)
-        categoryIcon.render(matrices)
+        typeIcon.render(drawContext)
+        categoryIcon.render(drawContext)
 
         drawScaledText(
-            matrixStack = matrices,
+            drawContext,
             font = TMMachineScreen.DEFAULT_LARGE,
             text = move.template.displayName.bold(),
             x = x + 22,
@@ -109,7 +112,7 @@ class MoveOptionWidget(
     }
 
     override fun playDownSound(soundManager: SoundManager) {
-        soundManager.play(PositionedSoundInstance.master(CobblemonSounds.GUI_CLICK.get(), 0.8f, 0.9f))
+        soundManager.play(PositionedSoundInstance.master(CobblemonSounds.GUI_CLICK, 0.8f, 0.9f))
     }
 
     override fun isValidClickButton(button: Int): Boolean {

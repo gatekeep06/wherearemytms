@@ -32,7 +32,7 @@ class MoveTransferItem(settings: Settings, val breaksAfterUse: Boolean, val titl
             user.sendMessage(
                 createResponse(
                     "response.wherearemytms.already_learned",
-                    pokemon.displayName,
+                    pokemon.getDisplayName(),
                     moveTemplate.displayName,
                     Formatting.RED
                 )
@@ -64,7 +64,7 @@ class MoveTransferItem(settings: Settings, val breaksAfterUse: Boolean, val titl
         user.sendMessage(
             createResponse(
                 "response.wherearemytms.cannot_learn",
-                pokemon.displayName,
+                pokemon.getDisplayName(),
                 moveTemplate.displayName,
                 Formatting.RED
             )
@@ -159,7 +159,7 @@ class MoveTransferItem(settings: Settings, val breaksAfterUse: Boolean, val titl
         user.sendMessage(
             createResponse(
                 "response.wherearemytms.success",
-                pokemon.displayName,
+                pokemon.getDisplayName(),
                 moveTemplate.displayName,
                 Formatting.GOLD
             )

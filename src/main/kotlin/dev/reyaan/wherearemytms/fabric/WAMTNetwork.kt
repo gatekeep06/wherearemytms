@@ -1,5 +1,6 @@
 package dev.reyaan.wherearemytms.fabric
 
+import com.cobblemon.mod.common.api.moves.Move
 import com.cobblemon.mod.common.api.moves.Move.Companion.loadFromNBT
 import dev.reyaan.wherearemytms.fabric.WAMT.TM_MACHINE_MOVE_SELECT_PACKET_ID
 import dev.reyaan.wherearemytms.fabric.item.MoveTransferItem
@@ -22,7 +23,7 @@ object WAMTNetwork {
         ) { server: MinecraftServer, player: ServerPlayerEntity, handler: ServerPlayNetworkHandler, buf: PacketByteBuf, responseSender: PacketSender ->
             val nbtCompound = buf.readNbt()
             if (nbtCompound != null) {
-                val move = loadFromNBT(nbtCompound)
+                val move = Move.loadFromNBT(nbtCompound)
                 val stack = player.getStackInHand(player.activeHand)
                 if (stack.item is MoveTransferItem) {
 

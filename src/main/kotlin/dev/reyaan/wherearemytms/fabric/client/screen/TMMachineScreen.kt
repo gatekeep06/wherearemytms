@@ -18,6 +18,7 @@ import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.util.math.MatrixStack
@@ -145,13 +146,14 @@ class TMMachineScreen(private val party: List<Pokemon?>):
         }
     }
 
-    override fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
-        renderBackground(matrices)
+    override fun render(drawContext: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        renderBackground(drawContext)
 
         val x = (width - BASE_WIDTH) / 2
         val y = (height - BASE_HEIGHT) / 2
 
         // portrait background
+        val matrices = drawContext.matrices
         blitk(
             matrixStack = matrices,
             texture = PORTRAIT_BACKGROUND,
@@ -162,7 +164,7 @@ class TMMachineScreen(private val party: List<Pokemon?>):
         )
 
         // pokemon model
-        modelWidget?.render(matrices, mouseX, mouseY, delta)
+        modelWidget?.render(drawContext, mouseX, mouseY, delta)
 
         // actual background
         blitk(
@@ -178,9 +180,9 @@ class TMMachineScreen(private val party: List<Pokemon?>):
         val pokemon = nonNullParty[currentSlot]
         // Draw labels
         drawScaledText(
-            matrixStack = matrices,
+            drawContext,
             font = DEFAULT_LARGE,
-            text = pokemon.displayName.bold(),
+            text = pokemon.getDisplayName().bold(),
             x = x + 5,
             y = y + 9,
             shadow = true
@@ -191,7 +193,7 @@ class TMMachineScreen(private val party: List<Pokemon?>):
             val isMale = gender == Gender.MALE
             val textSymbol = if (isMale) "♂".text().bold() else "♀".text().bold()
             drawScaledText(
-                matrixStack = matrices,
+                drawContext,
                 font = DEFAULT_LARGE,
                 text = textSymbol,
                 x = x + 5,
@@ -203,7 +205,7 @@ class TMMachineScreen(private val party: List<Pokemon?>):
         }
 
         drawScaledText(
-            matrixStack = matrices,
+            drawContext,
             font = DEFAULT_LARGE,
             text = lang("ui.lv").bold(),
             x = x + 61.5,
@@ -213,7 +215,7 @@ class TMMachineScreen(private val party: List<Pokemon?>):
         )
 
         drawScaledText(
-            matrixStack = matrices,
+            drawContext,
             font = DEFAULT_LARGE,
             text = pokemon.level.toString().text().bold(),
             x = x + 61.5,
@@ -222,11 +224,11 @@ class TMMachineScreen(private val party: List<Pokemon?>):
         )
 
         moveOptions.forEach {
-            it.render(matrices, mouseX, mouseY, delta)
+            it.render(drawContext, mouseX, mouseY, delta)
         }
 
-        backButton?.render(matrices, mouseX, mouseY, delta)
-        nextButton?.render(matrices, mouseX, mouseY, delta)
+        backButton?.render(drawContext, mouseX, mouseY, delta)
+        nextButton?.render(drawContext, mouseX, mouseY, delta)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {

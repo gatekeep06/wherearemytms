@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=south,half=upper": {
+      "model": "wherearemytms:block/move_machine_top"
+    },
+    "facing=west,half=upper": {
+      "model": "wherearemytms:block/move_machine_top",
+      "y": 90
+    },
+    "facing=north,half=upper": {
+      "model": "wherearemytms:block/move_machine_top",
+      "y": 180
+    },
+    "facing=east,half=upper": {
+      "model": "wherearemytms:block/move_machine_top",
+      "y": 270
+    },
+    "facing=south,half=lower": {
+      "model": "wherearemytms:block/move_machine_bottom"
+    },
+    "facing=west,half=lower": {
+      "model": "wherearemytms:block/move_machine_bottom",
+      "y": 90
+    },
+    "facing=north,half=lower": {
+      "model": "wherearemytms:block/move_machine_bottom",
+      "y": 180
+    },
+    "facing=east,half=lower": {
+      "model": "wherearemytms:block/move_machine_bottom",
+      "y": 270
+    }
+  }
+}

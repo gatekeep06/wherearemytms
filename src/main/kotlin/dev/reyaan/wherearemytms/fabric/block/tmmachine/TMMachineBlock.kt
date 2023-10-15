@@ -32,7 +32,7 @@ import net.minecraft.world.WorldView
 
 class TMMachineBlock(settings: Settings): HorizontalFacingBlock(settings), BlockEntityProvider {
     init {
-        defaultState = defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH).with(HALF, DoubleBlockHalf.LOWER)
+        defaultState = defaultState.with(FACING, Direction.NORTH).with(HALF, DoubleBlockHalf.LOWER)
     }
 
     companion object {
@@ -72,7 +72,7 @@ class TMMachineBlock(settings: Settings): HorizontalFacingBlock(settings), Block
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(Properties.HORIZONTAL_FACING).add(HALF)
+        builder.add(FACING).add(HALF)
     }
 
     override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity?) {
@@ -96,7 +96,7 @@ class TMMachineBlock(settings: Settings): HorizontalFacingBlock(settings), Block
         val world = ctx.world
         if (world.getBlockState(abovePosition).canReplace(ctx) && !world.isOutOfHeightLimit(abovePosition)) {
             return defaultState
-                .with(FACING, ctx.playerFacing)
+                .with(FACING, ctx.horizontalPlayerFacing)
                 .with(HALF, DoubleBlockHalf.LOWER)
         }
 

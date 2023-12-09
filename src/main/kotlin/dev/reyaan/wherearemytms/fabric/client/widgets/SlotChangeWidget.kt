@@ -1,8 +1,8 @@
 package dev.reyaan.wherearemytms.fabric.client.widgets
 
 import com.cobblemon.mod.common.CobblemonSounds
-import com.cobblemon.mod.common.api.gui.blitk
 import dev.reyaan.wherearemytms.fabric.WAMT.id
+import dev.reyaan.wherearemytms.fabric.util.blitk
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.sound.PositionedSoundInstance

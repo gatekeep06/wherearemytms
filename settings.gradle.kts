@@ -1,4 +1,4 @@
-rootProject.name = "WhereAreMyTMs"
+rootProject.name = "wherearemytms"
 
 // basic repositories
 pluginManagement {

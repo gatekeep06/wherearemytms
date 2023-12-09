@@ -1,11 +1,9 @@
 package dev.reyaan.wherearemytms.fabric.client.screen
 
-import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.api.moves.Move
 import com.cobblemon.mod.common.api.text.bold
 import com.cobblemon.mod.common.api.text.text
 import com.cobblemon.mod.common.client.gui.summary.widgets.ModelWidget
-import com.cobblemon.mod.common.client.render.drawScaledText
 import com.cobblemon.mod.common.pokemon.Gender
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.util.lang
@@ -13,6 +11,8 @@ import dev.reyaan.wherearemytms.fabric.WAMT.TM_MACHINE_MOVE_SELECT_PACKET_ID
 import dev.reyaan.wherearemytms.fabric.WAMT.id
 import dev.reyaan.wherearemytms.fabric.client.widgets.MoveOptionWidget
 import dev.reyaan.wherearemytms.fabric.client.widgets.SlotChangeWidget
+import dev.reyaan.wherearemytms.fabric.util.blitk
+import dev.reyaan.wherearemytms.fabric.util.drawScaledText
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -20,8 +20,6 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.widget.ButtonWidget
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier

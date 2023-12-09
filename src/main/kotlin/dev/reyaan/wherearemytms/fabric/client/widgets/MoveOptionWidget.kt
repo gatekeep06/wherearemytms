@@ -1,17 +1,17 @@
 package dev.reyaan.wherearemytms.fabric.client.widgets
 
 import com.cobblemon.mod.common.CobblemonSounds
-import com.cobblemon.mod.common.api.gui.blitk
 import com.cobblemon.mod.common.api.moves.Move
 import com.cobblemon.mod.common.api.text.bold
 import com.cobblemon.mod.common.api.text.gold
 import com.cobblemon.mod.common.api.text.red
 import com.cobblemon.mod.common.client.gui.MoveCategoryIcon
 import com.cobblemon.mod.common.client.gui.TypeIcon
-import com.cobblemon.mod.common.client.render.drawScaledText
 import com.cobblemon.mod.common.util.math.toRGB
 import dev.reyaan.wherearemytms.fabric.WAMT
 import dev.reyaan.wherearemytms.fabric.client.screen.TMMachineScreen
+import dev.reyaan.wherearemytms.fabric.util.blitk
+import dev.reyaan.wherearemytms.fabric.util.drawScaledText
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.sound.PositionedSoundInstance

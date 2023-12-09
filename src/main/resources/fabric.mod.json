@@ -18,7 +18,7 @@
       }
     ],
     "client": [
-      "dev.reyaan.wherearemytms.fabric.client.WAMTClient"
+        "dev.reyaan.wherearemytms.fabric.client.WAMTClient"
     ]
   },
 	"mixins": [
